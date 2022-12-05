@@ -54,9 +54,25 @@ public class Affiche extends JFrame {
         r.printStackTrace();
         }
     }
+    public void reinitialiseImg(){
+        try (BufferedWriter fos = Files.newBufferedWriter(Path.of("andrana.jpg"),StandardOpenOption.TRUNCATE_EXISTING)){
+        }
+        catch(Exception r){
+        r.printStackTrace();
+        }
+    }
     public void changeFile(byte[] tab){
         File k = new File("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.mp4");
         try (FileOutputStream fos = new FileOutputStream("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.mp4",true)){
+        fos.write(tab);
+        }
+        catch(Exception r){
+        r.printStackTrace();
+        }
+    }
+    public void changeImage(byte[] tab){
+        File k = new File("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.mp4");
+        try (FileOutputStream fos = new FileOutputStream("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.jpg",true)){
         fos.write(tab);
         }
         catch(Exception r){

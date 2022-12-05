@@ -76,36 +76,23 @@ public class PlayListener implements MouseListener{
                 //.....recevoir
                 
             int count = 0;
+            int y = 0;
             ObjectInputStream receiveByte = new ObjectInputStream(fenetre.getS().getInputStream());
             if(choix.contains(".jpg")){
                 while(count<taille){
-                    fichier = (byte[])receiveByte.readObject();
-                    Thread thr = new Thread(new Runnable() {
-                        @Override
-                        public void run() { 
-                            try {
-                               ImageIcon icon = new ImageIcon(fichier);
-                               JFrame fenetre  = new JFrame();
-                                fenetre.setSize(300, 300);    
-                                fenetre.setTitle("Welecome to WayToLearnX!");
-                                JLabel label = new JLabel(icon);
-                                fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                                fenetre.add(label,BorderLayout.CENTER);
-                                fenetre.setVisible(true);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }          
-                        }
-                    });
-                    
-                    if(count == 0){
-                        thr.start();
+                    if(y == 0){
+                        this.fenetre.reinitialiseImg();
+                        System.out.println("vita reinitialisation");
                     }
+                    y++;
+                    fichier = (byte[])receiveByte.readObject();
                     count = fichier.length+count;
+                    this.fenetre.changeImage(fichier);
+                    System.out.println("vaochange");
                 }
+                new LireImage();
                 receiveByte.close();
             }
-
             if(choix.contains(".mp3")){
                 while(count<taille){
                     fichier = (byte[])receiveByte.readObject();
@@ -139,7 +126,6 @@ public class PlayListener implements MouseListener{
                     if(c == 0){
                         this.fenetre.reinitialise();
                         System.out.println("vita reinitialisation");
-                       
                     }
                     c++;
                     fichier = (byte[])receiveByte.readObject();
