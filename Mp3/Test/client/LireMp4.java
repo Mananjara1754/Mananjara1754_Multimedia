@@ -19,9 +19,7 @@ import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.component.EmbeddedMediaListPlayerComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-/**
- * Main
- */
+
 public class LireMp4 extends JFrame {
     
     EmbeddedMediaPlayerComponent video = new EmbeddedMediaListPlayerComponent();
@@ -53,7 +51,6 @@ public class LireMp4 extends JFrame {
         add(panelBout,BorderLayout.SOUTH);
         setVisible(true);
         addListener();
-        //video.getMediaPlayer().start();
     }
     private void addListener() {
         play.addActionListener(new ActionListener(){

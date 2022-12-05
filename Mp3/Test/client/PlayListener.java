@@ -73,7 +73,7 @@ public class PlayListener implements MouseListener{
             int taille = (int)receiveTaille.readObject();
             System.out.println(taille  + " Tailles maximale");
         
-                //.....recevoir
+            //.....receive
                 
             int count = 0;
             int y = 0;
@@ -95,30 +95,18 @@ public class PlayListener implements MouseListener{
             }
             if(choix.contains(".mp3")){
                 while(count<taille){
-                    fichier = (byte[])receiveByte.readObject();
-                    
-
-                    Thread thr = new Thread(new Runnable() {
-                        @Override
-                        public void run() { 
-                            try {
-                                ByteArrayInputStream bt = new ByteArrayInputStream(fichier);
-                                Player player=new Player(bt);
-                                player.play();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }          
-                            
-                        }
-                    });
-                    if(count == 0){
-                        thr.start();
-                    }
+                    fichier = (byte[])receiveByte.readObject(); 
+                    try {
+                        ByteArrayInputStream bt = new ByteArrayInputStream(fichier);
+                        Player player=new Player(bt);
+                        player.play();
+                    } catch (Exception xe) {
+                        xe.printStackTrace();
+                    }          
                     count = fichier.length+count;
                 }
                 receiveByte.close();
             }
-           
             int c =0;          
                     
             if(choix.contains(".mp4")){
@@ -133,8 +121,7 @@ public class PlayListener implements MouseListener{
                     System.out.println(fichier.length+" oulala");
                     System.out.println(count);
                     this.fenetre.changeFile(fichier);
-                    System.out.println("vaochange");
-                    
+                    System.out.println("vaochange");  
                 }
                 NativeLibrary.addSearchPath("libvlc","C:\\Program Files\\VideoLAN\\VLC");
                 Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
@@ -146,9 +133,7 @@ public class PlayListener implements MouseListener{
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-          
     }
-    
     public void mousePressed(MouseEvent e){}
     public void mouseReleased(MouseEvent e){}
     public void mouseEntered(MouseEvent e){}

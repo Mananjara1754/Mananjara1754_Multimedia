@@ -21,7 +21,6 @@ public class LireImage extends JFrame{
             
             ImageIcon icon = new ImageIcon(tab);
             JLabel label = new JLabel(icon);
-            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.add(label,BorderLayout.CENTER);
 
             this.setVisible(true);

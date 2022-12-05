@@ -51,8 +51,6 @@ public class Client {
     // }
 
     public static void main(String[] args) {
-        // NativeLibrary.addSearchPath("libvlc","C:\\Program Files\\VideoLAN\\VLC");
-        // Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
         try {
             Socket s=new Socket("localhost",6664); 
             ObjectInputStream oi = new ObjectInputStream(s.getInputStream());
