@@ -36,7 +36,7 @@ public class Main extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         try {
-            video.getMediaPlayer().prepareMedia(new File(getClass().getResource("Jazz Music Korea - Autumn Leaves.mp4").toURI()).getPath());
+            video.getMediaPlayer().prepareMedia(new File(getClass().getResource("andrana.mp4").toURI()).getPath());
         } catch (Exception e) {
             e.printStackTrace();
         }

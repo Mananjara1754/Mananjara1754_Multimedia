@@ -77,34 +77,69 @@ public class PlayListener implements MouseListener{
                 
             int count = 0;
             ObjectInputStream receiveByte = new ObjectInputStream(fenetre.getS().getInputStream());
+            if(choix.contains(".jpg")){
+                while(count<taille){
+                    fichier = (byte[])receiveByte.readObject();
+                    Thread thr = new Thread(new Runnable() {
+                        @Override
+                        public void run() { 
+                            try {
+                               ImageIcon icon = new ImageIcon(fichier);
+                               JFrame fenetre  = new JFrame();
+                                fenetre.setSize(300, 300);    
+                                fenetre.setTitle("Welecome to WayToLearnX!");
+                                JLabel label = new JLabel(icon);
+                                fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                fenetre.add(label,BorderLayout.CENTER);
+                                fenetre.setVisible(true);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }          
+                        }
+                    });
+                    
+                    if(count == 0){
+                        thr.start();
+                    }
+                    count = fichier.length+count;
+                }
+                receiveByte.close();
+            }
+
             if(choix.contains(".mp3")){
                 while(count<taille){
                     fichier = (byte[])receiveByte.readObject();
+                    
+
+                    Thread thr = new Thread(new Runnable() {
+                        @Override
+                        public void run() { 
+                            try {
+                                ByteArrayInputStream bt = new ByteArrayInputStream(fichier);
+                                Player player=new Player(bt);
+                                player.play();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }          
+                            
+                        }
+                    });
+                    if(count == 0){
+                        thr.start();
+                    }
                     count = fichier.length+count;
-                    ByteArrayInputStream bt = new ByteArrayInputStream(fichier);
-                    Player player=new Player(bt);
-                    player.play();
-                    this.fenetre.setFocusable(true);
                 }
                 receiveByte.close();
             }
            
-            int c =0;
+            int c =0;          
+                    
             if(choix.contains(".mp4")){
                 while(count<taille){
-                    Thread thr = new Thread(new Runnable() {
-                        @Override
-                        public void run() {           
-                            NativeLibrary.addSearchPath("libvlc","C:\\Program Files\\VideoLAN\\VLC");
-                            Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
-                            new LireMp4();
-                        }
-                        
-                    });
                     if(c == 0){
                         this.fenetre.reinitialise();
                         System.out.println("vita reinitialisation");
-                        thr.start();
+                       
                     }
                     c++;
                     fichier = (byte[])receiveByte.readObject();
@@ -115,16 +150,9 @@ public class PlayListener implements MouseListener{
                     System.out.println("vaochange");
                     
                 }
-                //new LireMp4();
-    
-                
-        // pause.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         String selectedFruit = "You selected " + jComboBox.getItemAt(jComboBox.getSelectedIndex());
-        //         jLabel.setText(selectedFruit);
-        //     }
-        // });
+                NativeLibrary.addSearchPath("libvlc","C:\\Program Files\\VideoLAN\\VLC");
+                Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
+                new LireMp4();
                 receiveByte.close();
             }
             fenetre.getS().close();

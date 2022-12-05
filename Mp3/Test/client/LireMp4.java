@@ -31,12 +31,12 @@ public class LireMp4 extends JFrame {
     public LireMp4(){
         
         setSize(1280, 720);
-        setTitle("Video Palayer");
+        setTitle("Video Palyer");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         try {
-            video.getMediaPlayer().prepareMedia(new File(getClass().getResource("andrana.mp4").toURI()).getPath());
+            video.getMediaPlayer().prepareMedia("andrana.mp4");        
         } catch (Exception e) {
             e.printStackTrace();
         }
