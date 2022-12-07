@@ -128,8 +128,8 @@ public class Affiche extends JFrame {
         this.setVisible(true);
         
         JButton pause = new JButton("Pause");
-        pause.setBounds(200, 100, 90, 20);
-        this.add(pause);
+        // pause.setBounds(200, 100, 90, 20);
+        // this.add(pause);
         jButton.addMouseListener(new PlayListener(this,jComboBox,pause));
     }
 }
