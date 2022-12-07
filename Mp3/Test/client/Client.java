@@ -30,46 +30,48 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class Client {
-    
-    
 
-    // static void reinitialise(){
-    //     try (BufferedWriter fos = Files.newBufferedWriter(Path.of("andrana.mp4"),StandardOpenOption.TRUNCATE_EXISTING)){
-    //     }
-    //     catch(Exception r){
-    //     r.printStackTrace();
-    //     }
-    // }
-    // static void changeFile(byte[] tab){
-    //     File k = new File("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.mp4");
-    //     try (FileOutputStream fos = new FileOutputStream("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.mp4",true)){
-    //     fos.write(tab);
-    //     }
-    //     catch(Exception r){
-    //     r.printStackTrace();
-    //     }
-    // }
+    public static void cancel() {
+        // interruption du thread courant, c'est-à-dire le nôtre
+       Thread.currentThread().interrupt() ;
+    }
+    public static void receive() {
+        Thread thr = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                try {
+                    int n= 0;
+                    while (!Thread.currentThread().isInterrupted()){
+                        // traitements
+                        Socket s=new Socket("localhost",6664); 
+                        ObjectInputStream oi = new ObjectInputStream(s.getInputStream());
+                        Object objetAzo =  oi.readObject();
+                        Vector v = (Vector)objetAzo;
+                        Object[] oups = v.toArray();
+                        String[] lesMusics = new String[oups.length];
+                        for (int i = 0; i < oups.length; i++) {
+                            lesMusics[i] = (String)oups[i];
+                        }
+                        //Envoie du choix
+                        Affiche show = new Affiche(lesMusics, s );
+    
+                       //.....fanaphana....//
+                       if(n==10000){
+                        System.out.println("stope euh");
+                        cancel();
+                    }
+                   }
+                }  catch (Exception e) {
+                    e.printStackTrace();
+                    Thread.currentThread().interrupted();
+                }
+            }
+        });
+        thr.start();
+    }
 
     public static void main(String[] args) {
-        try {
-            Socket s=new Socket("localhost",6664); 
-            ObjectInputStream oi = new ObjectInputStream(s.getInputStream());
-            Object objetAzo =  oi.readObject();
-            Vector v = (Vector)objetAzo;
-            Object[] oups = v.toArray();
-            String[] lesMusics = new String[oups.length];
-            for (int i = 0; i < oups.length; i++) {
-                lesMusics[i] = (String)oups[i];
-            }
-            //Envoie du choix
-            Affiche show = new Affiche(lesMusics, s );
-            
-            
-        }
-        catch(Exception e){
-            System.out.println("misy ereurrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-            e.printStackTrace();
-        }
+        receive();
 }
 
 }

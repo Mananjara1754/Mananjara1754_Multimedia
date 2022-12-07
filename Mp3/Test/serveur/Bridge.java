@@ -26,6 +26,5 @@ public class Bridge {
             System.out.println(rep[i]);
         }
         return v;
-    }    
-    
+    }   
 }

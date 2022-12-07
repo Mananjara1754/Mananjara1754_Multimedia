@@ -71,7 +71,7 @@ public class Affiche extends JFrame {
         }
     }
     public void changeImage(byte[] tab){
-        File k = new File("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.mp4");
+        //File k = new File("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.mp4");
         try (FileOutputStream fos = new FileOutputStream("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.jpg",true)){
         fos.write(tab);
         }
@@ -79,6 +79,24 @@ public class Affiche extends JFrame {
         r.printStackTrace();
         }
     }
+    //.................................
+    public void changeMp3(byte[] tab){
+        //File k = new File("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.mp3");
+        try (FileOutputStream fos = new FileOutputStream("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.mp3",true)){
+        fos.write(tab);
+        }
+        catch(Exception r){
+        r.printStackTrace();
+        }
+    }
+    public void reinitialiseMp3(){
+        try (BufferedWriter fos = Files.newBufferedWriter(Path.of("andrana.mp3"),StandardOpenOption.TRUNCATE_EXISTING)){
+        }
+        catch(Exception r){
+        r.printStackTrace();
+        }
+    }
+
 
     public void setData(String[] data) {
         this.data = data;
@@ -112,77 +130,6 @@ public class Affiche extends JFrame {
         JButton pause = new JButton("Pause");
         pause.setBounds(200, 100, 90, 20);
         this.add(pause);
-        // pause.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         String selectedFruit = "You selected " + jComboBox.getItemAt(jComboBox.getSelectedIndex());
-        //         jLabel.setText(selectedFruit);
-        //     }
-        // });
-       
-        // jButton.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-                
-        //         String selectedFruit = "You selected " + jComboBox.getItemAt(jComboBox.getSelectedIndex());
-        //         jLabel.setText(selectedFruit);
-        //     //     try {
-        //     //         ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-        //     //         oos.flush();
-        //     //         String choix = jComboBox.getItemAt(jComboBox.getSelectedIndex());
-        //     //         oos.writeObject(choix);
-        //     //         //..... taille
-        //     //     ObjectInputStream receiveTaille = new ObjectInputStream(s.getInputStream());
-        //     //     int taille = (int)receiveTaille.readObject();
-        //     //     System.out.println(taille  + " Tailles maximale");
-                
-        //     //     //.....recevoir
-        //     //     int count = 0;
-        //     //     ObjectInputStream receiveByte = new ObjectInputStream(s.getInputStream());
-        //     //     // byte[] f = (byte[])receiveByte.readObject();
-        //     //     //System.out.println(f.length+"manahoana");
-        //     //     if(choix.contains(".mp3")){
-        //     //         while(count<taille){
-        //     //             fichier = (byte[])receiveByte.readObject();
-        //     //             count = fichier.length+count;
-        //     //             ByteArrayInputStream bt = new ByteArrayInputStream(fichier);
-        //     //             Player player=new Player(bt);
-        //     //             player.play();
-                        
-        //     //         }
-        //     //         receiveByte.close();
-        //     //     }
-        //     //     LireMp4 play = new LireMp4();
-        //     //     int c =0;
-        //     //     if(choix.contains(".mp4")){
-        //     //         while(count<taille){
-        //     //             if(c == 0){
-        //     //                 reinitialise();
-        //     //                 System.out.println("vita reinitialisation");
-        //     //             }
-        //     //             c++;
-        //     //             fichier = (byte[])receiveByte.readObject();
-        //     //             count = fichier.length+count;
-        //     //             System.out.println(fichier.length+" oulala");
-        //     //             System.out.println(count);
-        //     //             changeFile(fichier);
-        //     //             System.out.println("vaochange");
-        //     //         }
-        //     //         play.playVideo();
-        //     //         receiveByte.close();
-        //     //     }
-        //     //     s.close();
-        //     //     oos.close();
-                
-
-        //     //     } catch (Exception ex) {
-        //     //         ex.printStackTrace();
-        //     //     }
-               
-        //      }
-        // });
-       // jButton.addMouseListener(new PlayListener(this,jComboBox.getItemAt(jComboBox.getSelectedIndex())));
-       jButton.addMouseListener(new PlayListener(this, jComboBox,pause));
-        
+        jButton.addMouseListener(new PlayListener(this,jComboBox,pause));
     }
 }

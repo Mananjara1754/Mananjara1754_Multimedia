@@ -149,7 +149,6 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 public class Serveur {
 
-
     public static int[] mizara(int taille,int divisuer) {
         int[] rep = new int[4];
         if(taille % divisuer!=0){
@@ -168,57 +167,80 @@ public class Serveur {
             }
             rep = lesvaleurs;
         }
-        
         return rep;
     }
-    public static void main(String[] args){ 
-        Bridge o = new Bridge();
-        try{
-        ServerSocket ss=new ServerSocket(6664);  
-        Socket s=ss.accept();
+    public static void cancel() {
+        // interruption du thread courant, c'est-à-dire le nôtre
+       Thread.currentThread().interrupt() ;
+    }
+    public static void ActivationServer() {
+        Thread thr = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                try {
+                    int n= 0;
+                    ServerSocket ss=new ServerSocket(6664);  
+                    Bridge o = new Bridge();
+                    while (!Thread.currentThread().isInterrupted()){
+                       
+                        // traitements
+                        Socket s=ss.accept();
+                    
+                        //.................................mandefa anle Musique rehetra    
+                        ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+                        oos.flush();
+                        Vector v = o.get_All_mp3();
+                        oos.writeObject(v);
+
+                    //..........................mandray anle music
+                        ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
+                        String choisie = (String)ois.readObject();
+                        byte[] tab = Files.readAllBytes(Paths.get("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Musique\\"+choisie));
+
+                        //MAndefa anle taille
+                        ObjectOutputStream taille = new ObjectOutputStream(s.getOutputStream());
+                        taille.flush();
+                        taille.writeObject(tab.length);
+
+                        ByteBuffer k = ByteBuffer.wrap(tab);        //Association de tab dans k
+                        System.out.println(tab.length);
+
+                        //Traitement de l'envoie du bytes par bytes
+                        ObjectOutputStream envoieByte = new ObjectOutputStream(s.getOutputStream());
+                        envoieByte.flush();
+                        int[] valeur = mizara(tab.length,5);       //Division du bytes en 10 bytes
+                        
+                        for (int i = 0; i < valeur.length; i++) {
+                            System.out.println(valeur[i] + " les valeurs " + i);
+                            byte[] vide = new byte[valeur[i]];
+                            k.get(vide,0,vide.length);    
+                        
+                        // envoie du byte a lire
+                            envoieByte.writeObject(vide); 
+                            System.out.println("lasa");
+                        }
     
-        //.................................mandefa anle Musique rehetra    
-        ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-        oos.flush();
-        Vector v = o.get_All_mp3();
-        oos.writeObject(v);
-
-       //..........................mandray anle music
-        ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-        String choisie = (String)ois.readObject();
-        byte[] tab = Files.readAllBytes(Paths.get("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Musique\\"+choisie));
-        //byte[] tab = Files.readAllBytes(Paths.get("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Musique\\Tayc - NUE (Clip Officiel).mp4"));
-
-        //MAndefa anle taille
-        ObjectOutputStream taille = new ObjectOutputStream(s.getOutputStream());
-        taille.flush();
-        taille.writeObject(tab.length);
-
-        ByteBuffer k = ByteBuffer.wrap(tab);        //Association de tab dans k
-        System.out.println(tab.length);
-
-        //Traitement de l'envoie du bytes par bytes
-        ObjectOutputStream envoieByte = new ObjectOutputStream(s.getOutputStream());
-        envoieByte.flush();
-        int[] valeur = mizara(tab.length,5);       //Division du bytes en 10 bytes
-        
-        for (int i = 0; i < valeur.length; i++) {
-            System.out.println(valeur[i] + " les valeurs " + i);
-            byte[] vide = new byte[valeur[i]];
-            k.get(vide,0,vide.length);    
-        
-        // envoie du byte a lire
-            envoieByte.writeObject(vide); 
-            System.out.println("lasa");
-        }
-        
-        oos.close();
-        taille.close();
-        envoieByte.close();
-        ss.close();  
-        s.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }  
-        } 
+                       //.....fanaphana....//
+                       if(n==10000){
+                        oos.close();
+                        taille.close();
+                        envoieByte.close();
+                        ss.close();
+                        s.close();
+                        System.out.println("stope euh");
+                        cancel();
+                    }
+                   }
+                }  catch (Exception e) {
+                    e.printStackTrace();
+                    Thread.currentThread().interrupted();
+                }
+            }
+        });
+        thr.start();
+    }
+    public static void main(String[] args){ 
+        System.out.println("SEVER ACTIVATE");
+        ActivationServer();
+    } 
 } 
