@@ -8,19 +8,14 @@ import java.awt.event.ActionListener;
 import java.net.Socket;
 import java.io.ObjectOutputStream;
 import java.io.*;
-//..
 import javazoom.jl.player.Player;
-import java.io.*;  
 import java.net.*;
 import java.util.Vector;
 
-import javax.swing.*;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.awt.*;
-import javax.swing.*;
-import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 
 import com.sun.jna.Native;
@@ -45,8 +40,6 @@ public class Affiche extends JFrame {
     public Socket getS() {
         return s;
     }
-
-
     public void reinitialise(){
         try (BufferedWriter fos = Files.newBufferedWriter(Path.of("andrana.mp4"),StandardOpenOption.TRUNCATE_EXISTING)){
         }
@@ -71,7 +64,6 @@ public class Affiche extends JFrame {
         }
     }
     public void changeImage(byte[] tab){
-        //File k = new File("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.mp4");
         try (FileOutputStream fos = new FileOutputStream("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.jpg",true)){
         fos.write(tab);
         }
@@ -81,7 +73,6 @@ public class Affiche extends JFrame {
     }
     //.................................
     public void changeMp3(byte[] tab){
-        //File k = new File("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.mp3");
         try (FileOutputStream fos = new FileOutputStream("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.mp3",true)){
         fos.write(tab);
         }
@@ -96,8 +87,6 @@ public class Affiche extends JFrame {
         r.printStackTrace();
         }
     }
-
-
     public void setData(String[] data) {
         this.data = data;
     }
@@ -127,9 +116,7 @@ public class Affiche extends JFrame {
         this.setSize(350, 250);
         this.setVisible(true);
         
-        JButton pause = new JButton("Pause");
-        // pause.setBounds(200, 100, 90, 20);
-        // this.add(pause);
+         JButton pause = new JButton("Pause");
         jButton.addMouseListener(new PlayListener(this,jComboBox,pause));
     }
 }

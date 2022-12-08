@@ -5,19 +5,15 @@ import javazoom.jl.player.Player;
 import java.io.*;  
 import java.net.*;
 import java.util.Vector;
-
 import javax.swing.*;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.awt.*;
-import javax.swing.*;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
-
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
-
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -32,7 +28,6 @@ import java.nio.file.Path;
 public class Client {
 
     public static void cancel() {
-        // interruption du thread courant, c'est-à-dire le nôtre
        Thread.currentThread().interrupt() ;
     }
     public static void receive() {
@@ -75,22 +70,3 @@ public class Client {
 }
 
 }
-
-//Exemples de thread action mandeha en parallele an MAin
-// Thread thr = new Thread(new Runnable() {
-//     @Override
-//     public void run() {
-        
-//         //System.out.println(fichier.length + "io ny lasa");
-//         try {
-//             ByteArrayInputStream bt = new ByteArrayInputStream(fichier);
-//         Player player=new Player(bt);
-//         player.play();
-//         } catch (Exception e) {
-//             e.printStackTrace();
-//         }
-        
-//     }
-    
-// });
-// thr.start();

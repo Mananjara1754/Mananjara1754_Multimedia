@@ -4,46 +4,30 @@ import java.lang.Runnable;
 import javax.swing.JLabel;
 import java.awt.event.*;
 import java.awt.event.ActionListener;
-/*0 */
-import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.Socket;
 import java.io.ObjectOutputStream;
 import java.io.*;
-//..
 import javazoom.jl.player.Player;
-import java.io.*;  
 import java.net.*;
 import java.util.Vector;
-
-import javax.swing.*;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.awt.*;
-import javax.swing.*;
-import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
-
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
-
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 import uk.co.caprica.vlcj.player.embedded.windows.Win32FullScreenStrategy;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
-
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import affiche.Affiche;
-/**
- * Action
- */
 public class Action extends Thread {
 
     JComboBox liste;
@@ -73,7 +57,6 @@ public class Action extends Thread {
         this.fichier = fichier;
     }
     public static void cancel() {
-        // interruption du thread courant, c'est-à-dire le nôtre
        Thread.currentThread().interrupt() ;
     }
     public void run() {

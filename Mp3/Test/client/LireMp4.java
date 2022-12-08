@@ -2,14 +2,11 @@
 package play;
 import java.awt.BorderLayout;
 import java.io.File;
-
 import javax.swing.JFrame;
 import java.awt.*;
 import javax.swing.*;
-
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
-
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
@@ -29,7 +26,7 @@ public class LireMp4 extends JFrame {
     public LireMp4(){
         
         setSize(1280, 720);
-        setTitle("Video Palyer");
+        setTitle("My video");
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         try {
