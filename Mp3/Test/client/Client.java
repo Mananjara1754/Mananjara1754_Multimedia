@@ -36,19 +36,26 @@ public class Client {
             public void run() {
                 try {
                     int n= 0;
+                    Socket s = null;
+                    ObjectInputStream oi = null; 
+                    Object objetAzo= null;
+                    Vector v = null;
+                    Object[] oups = null;
+                    String[] lesMusics =  null;
+                    Affiche show = null;
                     while (!Thread.currentThread().isInterrupted()){
                         // traitements
-                        Socket s=new Socket("localhost",6664); 
-                        ObjectInputStream oi = new ObjectInputStream(s.getInputStream());
-                        Object objetAzo =  oi.readObject();
-                        Vector v = (Vector)objetAzo;
-                        Object[] oups = v.toArray();
-                        String[] lesMusics = new String[oups.length];
+                        s=new Socket("localhost",6664); 
+                        oi = new ObjectInputStream(s.getInputStream());
+                        objetAzo =  oi.readObject();
+                        v = (Vector)objetAzo;
+                        oups = v.toArray();
+                        lesMusics = new String[oups.length];
                         for (int i = 0; i < oups.length; i++) {
                             lesMusics[i] = (String)oups[i];
                         }
                         //Envoie du choix
-                        Affiche show = new Affiche(lesMusics, s );
+                        show = new Affiche(lesMusics, s );
     
                        //.....fanaphana....//
                        if(n==10000){
@@ -57,14 +64,14 @@ public class Client {
                     }
                    }
                 }  catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println("erreur ato @ client");
+                    //e.printStackTrace();
                     Thread.currentThread().interrupted();
                 }
             }
         });
         thr.start();
     }
-
     public static void main(String[] args) {
         receive();
 }

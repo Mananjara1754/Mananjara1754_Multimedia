@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.net.Socket;
 import java.io.ObjectOutputStream;
 import java.io.*;
-import javazoom.jl.player.Player;
 import java.net.*;
 import java.util.Vector;
 
@@ -55,7 +54,6 @@ public class Affiche extends JFrame {
         }
     }
     public void changeFile(byte[] tab){
-        File k = new File("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.mp4");
         try (FileOutputStream fos = new FileOutputStream("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Test\\client\\andrana.mp4",true)){
         fos.write(tab);
         }
@@ -100,10 +98,10 @@ public class Affiche extends JFrame {
       
         this.setData(data);
         JComboBox<String> jComboBox = new JComboBox<>(this.data);
-        jComboBox.setBounds(80, 50, 140, 20);
+        jComboBox.setBounds(40, 50, 250, 25);
 
         JButton jButton = new JButton("Done");
-        jButton.setBounds(100, 100, 90, 20);
+        jButton.setBounds(120, 100, 90, 20);
 
         JLabel jLabel = new JLabel();
         jLabel.setBounds(90, 100, 400, 100);
@@ -117,6 +115,6 @@ public class Affiche extends JFrame {
         this.setVisible(true);
         
          JButton pause = new JButton("Pause");
-        jButton.addMouseListener(new PlayListener(this,jComboBox,pause));
+        jButton.addMouseListener(new PlayListener(this,jComboBox));
     }
 }

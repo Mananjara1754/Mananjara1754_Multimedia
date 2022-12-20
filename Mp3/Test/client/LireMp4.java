@@ -23,14 +23,14 @@ public class LireMp4 extends JFrame {
     JButton play,pause,stop;
     JPanel panelBout = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-    public LireMp4(){
+    public LireMp4(String titre){
         
         setSize(1280, 720);
         setTitle("My video");
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         try {
-            video.getMediaPlayer().prepareMedia("andrana.mp4");        
+            video.getMediaPlayer().prepareMedia(titre);        
         } catch (Exception e) {
             e.printStackTrace();
         }

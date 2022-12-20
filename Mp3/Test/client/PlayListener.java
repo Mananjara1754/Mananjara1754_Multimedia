@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.net.Socket;
 import java.io.ObjectOutputStream;
 import java.io.*;
-import javazoom.jl.player.Player;
 import java.net.*;
 import java.util.Vector;
 import java.io.BufferedInputStream;
@@ -33,17 +32,16 @@ public class PlayListener implements MouseListener{
     JComboBox liste;
      Affiche fenetre;
     byte[] fichier;
-    JButton pause;
+ 
     public JComboBox getChoix() {
         return liste;
     }
     public void setChoix(JComboBox liste) {
         this.liste = liste;
     }
-    public PlayListener(Affiche soratra,JComboBox liste,JButton pause) {
+    public PlayListener(Affiche soratra,JComboBox liste) {
         this.setChoix(liste);
         this.fenetre = soratra;
-        this.pause = pause;
     }
     public static void alefaso(JComboBox liste,Affiche soratra,byte[] fichier) {
         play.Action acte = new play.Action(liste, soratra, fichier);

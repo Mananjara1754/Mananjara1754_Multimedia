@@ -17,6 +17,9 @@ public class Bridge {
                 if(item.getName().contains(".jpg")){
                     v.add(item.getName());
                 }
+                if(item.getName().contains(".mkv")){
+                    v.add(item.getName());
+                }
             }
         }
         Object[] k = v.toArray();

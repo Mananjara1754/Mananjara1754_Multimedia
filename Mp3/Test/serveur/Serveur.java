@@ -56,34 +56,44 @@ public class Serveur {
                     int n= 0;
                     ServerSocket ss=new ServerSocket(6664);  
                     Bridge o = new Bridge();
+                    Socket s = null;
+                    ObjectOutputStream oos = null;
+                    Vector v = null;
+                    ObjectInputStream ois = null;
+                    String choisie = "uhu";
+                    byte[] tab = null;
+                    ObjectOutputStream taille = null;
+                    ByteBuffer k = null;
+                    ObjectOutputStream envoieByte = null;
+
                     while (!Thread.currentThread().isInterrupted()){
-                       
+                        
                         // traitements
-                        Socket s=ss.accept();
+                        s=ss.accept();
                     
                         //.................................mandefa anle Musique rehetra    
-                        ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+                        oos = new ObjectOutputStream(s.getOutputStream());
                         oos.flush();
-                        Vector v = o.get_All_mp3();
+                        v = o.get_All_mp3();
                         oos.writeObject(v);
 
                     //..........................mandray anle music
-                        ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-                        String choisie = (String)ois.readObject();
-                        byte[] tab = Files.readAllBytes(Paths.get("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Musique\\"+choisie));
+                        ois = new ObjectInputStream(s.getInputStream());
+                        choisie = (String)ois.readObject();
+                        tab = Files.readAllBytes(Paths.get("D:\\FIANARANA\\DEV_JAVA\\Mp3\\Musique\\"+choisie));
 
                         //MAndefa anle taille
-                        ObjectOutputStream taille = new ObjectOutputStream(s.getOutputStream());
+                        taille = new ObjectOutputStream(s.getOutputStream());
                         taille.flush();
                         taille.writeObject(tab.length);
 
-                        ByteBuffer k = ByteBuffer.wrap(tab);        //Association de tab dans k
+                        k = ByteBuffer.wrap(tab);        //Association de tab dans k
                         System.out.println(tab.length);
 
                         //Traitement de l'envoie du bytes par bytes
-                        ObjectOutputStream envoieByte = new ObjectOutputStream(s.getOutputStream());
+                        envoieByte = new ObjectOutputStream(s.getOutputStream());
                         envoieByte.flush();
-                        int[] valeur = mizara(tab.length,5);       //Division du bytes en 10 bytes
+                        int[] valeur = mizara(tab.length,5);       //Division du bytes en 5 bytes
                         
                         for (int i = 0; i < valeur.length; i++) {
                             System.out.println(valeur[i] + " les valeurs " + i);

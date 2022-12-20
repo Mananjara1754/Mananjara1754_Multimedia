@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.net.Socket;
 import java.io.ObjectOutputStream;
 import java.io.*;
-import javazoom.jl.player.Player;
 import java.net.*;
 import java.util.Vector;
 import java.io.BufferedInputStream;
@@ -62,14 +61,18 @@ public class Action extends Thread {
     public void run() {
         try {
             int n= 0;
+            ObjectOutputStream oos = null;
+            ObjectInputStream receiveTaille = null;
+            ObjectInputStream receiveByte = null;
+            String choix = "hello";
             while (!Thread.currentThread().isInterrupted()){
                 // traitements
-                ObjectOutputStream oos = new ObjectOutputStream(fenetre.getS().getOutputStream());
+                oos = new ObjectOutputStream(fenetre.getS().getOutputStream());
                 oos.flush();
-                String choix = String.valueOf(liste.getItemAt(liste.getSelectedIndex())) ;
+                choix = String.valueOf(liste.getItemAt(liste.getSelectedIndex()));
                 oos.writeObject(choix);
                 //..... taille
-                ObjectInputStream receiveTaille = new ObjectInputStream(fenetre.getS().getInputStream());
+                receiveTaille = new ObjectInputStream(fenetre.getS().getInputStream());
                 int taille = (int)receiveTaille.readObject();
                 System.out.println(taille  + " Tailles maximale");
             
@@ -77,7 +80,7 @@ public class Action extends Thread {
                     
                 int count = 0;
                 int y = 0;
-                ObjectInputStream receiveByte = new ObjectInputStream(fenetre.getS().getInputStream());
+                receiveByte = new ObjectInputStream(fenetre.getS().getInputStream());
                 if(choix.contains(".jpg")){
                     while(count<taille){
                         if(y == 0){
@@ -107,14 +110,9 @@ public class Action extends Thread {
                         this.fenetre.changeMp3(fichier);
                         System.out.println("vaochange");  
                     }
-                    try {
-                        byte[] mozika = Files.readAllBytes(Paths.get("andrana.mp3"));
-                        ByteArrayInputStream bt = new ByteArrayInputStream(mozika);
-                        Player player=new Player(bt);
-                        player.play();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    NativeLibrary.addSearchPath("libvlc","C:\\Program Files\\VideoLAN\\VLC");
+                    Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
+                    new LireMp4("andrana.mp3");
                     // while(count<taille){
                     //     fichier = (byte[])receiveByte.readObject(); 
                     //     try {
@@ -129,7 +127,7 @@ public class Action extends Thread {
                 }
                 int c =0;          
                         
-                if(choix.contains(".mp4")){
+                if(choix.contains(".mp4") || choix.contains(".mkv")){
                     while(count<taille){
                         if(c == 0){
                             this.fenetre.reinitialise();
@@ -145,7 +143,7 @@ public class Action extends Thread {
                     }
                     NativeLibrary.addSearchPath("libvlc","C:\\Program Files\\VideoLAN\\VLC");
                     Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
-                    new LireMp4();
+                    new LireMp4("andrana.mp4");
                 }
                 
                //.....fanaphana....//
@@ -158,7 +156,6 @@ public class Action extends Thread {
             }
            }
         }  catch (Exception e) {
-            e.printStackTrace();
             Thread.currentThread().interrupted();
         }
     }
