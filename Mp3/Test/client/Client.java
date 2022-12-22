@@ -59,13 +59,12 @@ public class Client {
     
                        //.....fanaphana....//
                        if(n==10000){
-                        System.out.println("stope euh");
+                        System.out.println("stop euh");
                         cancel();
                     }
                    }
                 }  catch (Exception e) {
-                    System.out.println("erreur ato @ client");
-                    //e.printStackTrace();
+                    System.out.println(e.getMessage());
                     Thread.currentThread().interrupted();
                 }
             }

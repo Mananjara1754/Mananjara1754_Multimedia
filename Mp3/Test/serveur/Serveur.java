@@ -117,7 +117,7 @@ public class Serveur {
                     }
                    }
                 }  catch (Exception e) {
-                    e.printStackTrace();
+                    System.out.println(e.getMessage());
                     Thread.currentThread().interrupted();
                 }
             }
